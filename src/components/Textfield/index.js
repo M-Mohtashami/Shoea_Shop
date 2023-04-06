@@ -1,5 +1,5 @@
-import { svgs } from '@/assets'
-import El from '@/library/El'
+import { svgs } from '@/svgs'
+import {El} from '@/library'
 
 export const Textfield = ({
   label,
