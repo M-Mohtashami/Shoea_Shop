@@ -2,47 +2,29 @@ import { svgs } from '@/svgs'
 import {El} from '@/library'
 
 export const Textfield = ({
-  label,
-  helperText,
-  error = false,
+  icon,
+  info='',
   ...inputProps
 }) => {
   return El({
     element: 'div',
-    className: 'flex text-gray-600 flex-col px-1',
-    child: [
+    className: `relative text-black text-left px-7 py-2 bg-gray-100 rounded-md opacity-50`,
+    children: [
       El({
-        element: 'label',
-        className: 'text-sm mb-1 px-1',
-        child: label || '',
-      }),
-      El({
-        className: `px-1 py-3 outline-none border  rounded-md
-        ${error ? 'border-red-400' : ' border-blue-400'}
-        `,
+        className: `px-1 py-0 bg-gray-100 placeholder-black border-none focus:ring-0`,
         element: 'input',
         ...inputProps,
       }),
       El({
-        element: 'p',
-        className: 'text-xs flex gap-1 mt-2 px-1',
-        child: helperText
-          ? [
-              El({
-                element: 'span',
-                className: error
-                  ? '[&_path]:fill-red-500'
-                  : '[&_path]:fill-blue-500',
-                innerHTML: error ? svgs.ErrorSvgIcon : svgs.InfoSvgIcon,
-              }),
-              El({
-                element: 'span',
-                className: `flex-1 ${error ? 'text-red-500' : 'text-gray-500'}`,
-                child: helperText,
-              }),
-            ]
-          : '',
+        element:'span',
+        className:'absolute top-3 left-3',
+        innerHTML: icon
       }),
+      El({
+        element:'span',
+        className:'absolute top-3 right-4 cursor-pointer',
+        innerHTML: info
+      })
     ],
   })
 }

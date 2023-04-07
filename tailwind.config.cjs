@@ -17,6 +17,11 @@ module.exports = {
         'shoea':'#152536',
         'btn':'#212529'
       },
+      screens: {
+        'small': { 'raw': '(min-height: 650px)' },
+        'tall': { 'raw': '(min-height: 800px)' },
+        // => @media (min-height: 800px) { ... }
+      },
       backgroundImage: {
         'welcome-img': "url('/images/welcome_wallpaper.jpg')",
       }

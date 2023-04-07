@@ -4,7 +4,8 @@ import { El } from "@/library"
 export const Welcome=()=>{
     return El({
         element:'div',
-        className:'w-full h-full bg-welcome-img bg-cover bg-bottom',
+        id:'welcome',
+        className:'w-full h-full bg-welcome-img bg-cover bg-bottom transition ease-linear duration-500 transform translate-x-full',
         children:[
             El({
                 element:'div',

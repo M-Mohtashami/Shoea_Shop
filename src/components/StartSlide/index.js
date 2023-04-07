@@ -7,7 +7,7 @@ export const StartSlide =(slide)=>{
         children:[
             El({
                 element:'div',
-                className:'w-full',
+                className:'w-full overflow-hidden',
                 children:[
                     El({
                         element:'img',

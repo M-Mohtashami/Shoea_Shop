@@ -39,14 +39,15 @@ const createSwiper = ()=>{
 }
 
 export const StartSlider =()=>{
-    setTimeout(createSwiper,10)
+    setTimeout(createSwiper,0)
     return El({
         element:'div',
-        className:'w-full flex flex-col items-center justify-between',
+        id:'first-slider',
+        className:'w-full h-full pb-4 flex flex-col items-center justify-end tall:justify-between transition ease-linear duration-500 transform',
         children:[
             El({
                 element:'div',
-                className:'w-full h-[60%] swiper',
+                className:'w-full swiper',
                 children:[
                     El({
                         element:'div',

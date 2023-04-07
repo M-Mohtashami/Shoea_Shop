@@ -5,7 +5,8 @@ import { svgs } from "@/svgs"
 export const Loading=()=>{
     return El({
         element:'div',
-        className:'w-full h-full flex flex-col items-center justify-end gap-20',
+        id:'loading',
+        className:'w-full h-full flex flex-col items-center justify-end gap-20 transition ease-linear duration-500 transform',
         children:[
             El({
                 element:'div',
