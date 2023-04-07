@@ -11,7 +11,7 @@ export const Textfield = ({
     className: `relative text-black text-left px-7 py-2 bg-gray-100 rounded-md opacity-50`,
     children: [
       El({
-        className: `px-1 py-0 bg-gray-100 placeholder-black border-none focus:ring-0`,
+        className: `w-full px-1 py-0 bg-gray-100 placeholder-black border-none focus:ring-0`,
         element: 'input',
         ...inputProps,
       }),
