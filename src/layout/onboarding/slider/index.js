@@ -1,3 +1,4 @@
+import { Routes } from "@/Routes";
 import { StartSlide,Button } from "@/components"
 import { El } from "@/library"
 // import Swiper bundle with all modules installed
@@ -74,6 +75,10 @@ export const StartSlider =()=>{
                                     // Now you can use all slider methods like
                                     console.log(counter,slides.length)
                                     swiper.slideNext()
+                                    if(e.target.innerText === 'Get Started'){
+                                     Routes()[1].navigate('/login')
+                                     Routes();
+                                    }
                                     counter++ == slides.length - 1 ? (e.target.innerText='Get Started', counter = 1):null;
 
                                 }

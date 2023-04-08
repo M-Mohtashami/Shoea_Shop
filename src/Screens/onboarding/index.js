@@ -11,6 +11,7 @@ setTimeout(()=>{
     setTimeout(()=>{
     // const welcome = document.getElementById('welcome');
     // welcome.classList.toggle('translate-x-full');
+    getStarted.classList.remove('-translate-x-full');
     getStarted.innerHTML =''
     getStarted.appendChild(StartSlider());
     },2000)
