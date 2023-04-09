@@ -1,19 +1,32 @@
-import { onBoarding,Login } from "@/Screens"
+import { onBoarding,Login,Shop,Cart } from "@/Screens"
 import { El } from "@/library"
-import {router} from '../../main'
+import Navigo from "navigo"
+
+export const router = new Navigo('/');
+
+export const applyRouting=function(child=''){
+    const routeEl = document.getElementById('app')
+    routeEl.innerHTML =''
+    routeEl.append(child)
+
+}
 
 export const Routes = ()=>{
-    
-    const routeEl = document.getElementById('router') || El({element:'div', className:'h-full'})
-routeEl.innerHTML =''
     router.on('/welcome',function(){
-        console.log('welcome');
-        routeEl.appendChild(onBoarding())
+        applyRouting(onBoarding())
     })
     router.on('/login',function(){
-        console.log('login');
-        routeEl.appendChild(Login())
+        applyRouting(Login())
+    })
+    router.on('/shop',function(){
+        applyRouting(Shop())
+    })
+    router.on('/home',function(){
+        applyRouting('Welcome to home')
+    })
+    router.on('/cart',function(){
+        applyRouting(Cart())
     })
     router.resolve();
-return [routeEl,router]
+return router;
 }
