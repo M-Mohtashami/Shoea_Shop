@@ -9,6 +9,7 @@ export const Textfield = ({ icon, info = '', ...inputProps }) => {
       El({
         className: `w-full px-1 py-0 bg-gray-100 placeholder-black border-none focus:ring-0`,
         element: 'input',
+        autocomplete: 'off',
         ...inputProps,
       }),
       El({
