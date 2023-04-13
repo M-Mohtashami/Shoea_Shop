@@ -1,9 +1,13 @@
 import { Routes } from '@/Routes';
-import { getData } from '@/api';
+import { getData, update, fullUpdate } from '@/api';
 import { Button } from '@/components';
 import { El } from '@/library';
 import { svgs } from '@/svgs';
-export const cart = [];
+import Cookies from 'js-cookie';
+export let cart = [];
+export const updateCart = (newCart) => {
+  cart = newCart;
+};
 let productInfo;
 // a function to render size section and change the style of selected size
 const renderSize = (sizes, index = 0) => {
@@ -39,7 +43,7 @@ const renderSize = (sizes, index = 0) => {
     }
   });
 };
-const colorStyle = {
+export const colorStyle = {
   black: {
     bg: 'bg-shoea',
     fill: '[&_path]:fill-white',
@@ -135,7 +139,7 @@ export const SingleProduct = (product) => {
       // image section
       El({
         element: 'div',
-        className: 'w-full flex items-center justify-center',
+        className: 'w-full flex items-center justify-center aspect-square',
         children: [
           El({
             element: 'img',
@@ -347,7 +351,24 @@ export const SingleProduct = (product) => {
                   {
                     event: 'click',
                     callback: (e) => {
-                      cart.push(productInfo);
+                      let isNew = true;
+                      cart.forEach((item) => {
+                        if (item.id === productInfo.id) {
+                          item.quantity += productInfo.quantity;
+                          item.totalPrice += productInfo.totalPrice;
+                          isNew = false;
+                        }
+                      });
+                      isNew ? cart.push(productInfo) : null;
+
+                      getData(`/users?_email=${Cookies.get('shoea')}`).then(
+                        (response) => {
+                          console.log(cart);
+                          update.patch(`/users/${response.data[0].id}`, {
+                            cart,
+                          });
+                        }
+                      );
                       Routes().navigate('/shop');
                     },
                   },

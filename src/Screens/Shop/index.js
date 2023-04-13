@@ -2,12 +2,7 @@ import { El, renderProducts } from '@/library';
 import { navbar } from '@/layout';
 import { header, brandFilter, filterSection } from '@/layout';
 import { Search } from '@/components';
-import { getData } from '@/api';
-
-const info = {
-  name: 'Mohammad',
-  img: './images/profile.png',
-};
+import { getData, update } from '@/api';
 
 const showProducts = () => {
   const section = document.querySelector('.product-section');
@@ -43,7 +38,8 @@ const showProducts = () => {
   });
 };
 
-export const Shop = () => {
+export const Shop = (info) => {
+  // info.update();
   setTimeout(showProducts, 0);
   return El({
     element: 'div',

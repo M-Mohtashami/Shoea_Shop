@@ -3,6 +3,12 @@ import { getData } from '@/api';
 import { SingleProduct } from '@/layout';
 import { El } from '@/library';
 import Navigo from 'navigo';
+import Cookies from 'js-cookie';
+
+const info = {
+  name: 'Mohammad',
+  img: './images/profile.png',
+};
 
 export const router = new Navigo('/');
 
@@ -20,7 +26,12 @@ export const Routes = () => {
     applyRouting(Login());
   });
   router.on('/shop', function () {
-    applyRouting(Shop());
+    // update user info and call shop
+    getData(`/users?email=${Cookies.get('shoea')}`).then((response) => {
+      info.name = response.data[0].name;
+      console.log(info);
+      applyRouting(Shop(info));
+    });
     // router.destroy();
   });
   router.on('/products/:id', function (res) {
