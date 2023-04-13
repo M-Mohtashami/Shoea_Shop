@@ -1,4 +1,6 @@
 import { onBoarding, Login, Shop, Cart } from '@/Screens';
+import { getData } from '@/api';
+import { SingleProduct } from '@/layout';
 import { El } from '@/library';
 import Navigo from 'navigo';
 
@@ -19,10 +21,12 @@ export const Routes = () => {
   });
   router.on('/shop', function () {
     applyRouting(Shop());
-    router.destroy();
+    // router.destroy();
   });
-  router.on('/home', function () {
-    applyRouting('Welcome to home');
+  router.on('/products/:id', function (res) {
+    getData(`/products/${res.data.id}`).then((response) => {
+      applyRouting(SingleProduct(response.data));
+    });
   });
   router.on('/cart', function () {
     applyRouting(Cart());

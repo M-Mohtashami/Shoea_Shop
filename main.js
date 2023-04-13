@@ -6,6 +6,6 @@ import { Routes } from './src/Routes';
 
 const shoea = document.getElementById('app');
 
-Routes().navigate(location.pathname);
+Routes();
 // shoea.appendChild(app());
 shoea.classList.add('h-full', 'font-inter');

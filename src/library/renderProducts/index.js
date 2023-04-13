@@ -1,3 +1,4 @@
+import { Routes } from '@/Routes';
 import { El } from '@/library';
 
 export const renderProducts = (container, products) => {
@@ -6,6 +7,16 @@ export const renderProducts = (container, products) => {
       element: 'div',
       className:
         'max-w-sm flex flex-col items-start justify-center gap-2 col-span-6',
+      //set event listener click for single product
+      eventListener: [
+        {
+          event: 'click',
+          callback: () => {
+            // change route to product single page
+            Routes().navigate(`/products/${product.id}`);
+          },
+        },
+      ],
       children: [
         El({
           element: 'div',
