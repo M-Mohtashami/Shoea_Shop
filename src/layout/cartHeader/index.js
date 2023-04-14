@@ -34,7 +34,7 @@ export const cartHeader = () => {
           }),
         ],
       }),
-      // section notification and wish list
+      // section search icon
       El({
         element: 'div',
         className: '',

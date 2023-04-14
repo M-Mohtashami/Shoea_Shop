@@ -4,6 +4,7 @@ import { Button } from '@/components';
 import { El } from '@/library';
 import { svgs } from '@/svgs';
 import Cookies from 'js-cookie';
+import Swiper from 'swiper';
 export let cart = [];
 export const updateCart = (newCart) => {
   cart = newCart;
@@ -103,10 +104,22 @@ const renderColor = (colors, index = 0) => {
   });
 };
 
+const productSwiper = () => {
+  const swiper = new Swiper('.pswiper', {
+    loop: true,
+    autoplay: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+};
+
 export const SingleProduct = (product) => {
   setTimeout(() => {
     renderSize(product.sizes);
     renderColor(product.colors);
+    productSwiper();
   }, 0);
   // initialize product info
   productInfo = {
@@ -130,7 +143,7 @@ export const SingleProduct = (product) => {
     children: [
       El({
         element: 'span',
-        className: 'absolute left-10 top-12',
+        className: 'absolute left-10 top-12 z-50',
         onclick: () => {
           Routes().navigate('/shop');
         },
@@ -139,11 +152,47 @@ export const SingleProduct = (product) => {
       // image section
       El({
         element: 'div',
-        className: 'w-full flex items-center justify-center aspect-square',
+        className: 'swiper pswiper w-full aspect-square',
         children: [
           El({
-            element: 'img',
-            src: product.imageURL,
+            element: 'div',
+            className: 'swiper-wrapper',
+            children: [
+              El({
+                element: 'div',
+                className: 'swiper-slide',
+                children: [
+                  El({
+                    element: 'img',
+                    src: product.imageURL,
+                  }),
+                ],
+              }),
+              El({
+                element: 'div',
+                className: 'swiper-slide',
+                children: [
+                  El({
+                    element: 'img',
+                    src: 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-665455a5-45de-40fb-945f-c1852b82400d/react-infinity-run-flyknit-mens-running-shoe-zX42Nc.jpg',
+                  }),
+                ],
+              }),
+              El({
+                element: 'div',
+                className: 'swiper-slide',
+                children: [
+                  El({
+                    element: 'img',
+                    src: 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-5cc7de3b-2afc-49c2-a1e4-0508997d09e6/react-miler-mens-running-shoe-DgF6nr.jpg',
+                  }),
+                ],
+              }),
+            ],
+          }),
+          El({
+            element: 'div',
+            className: 'swiper-pagination',
           }),
         ],
       }),

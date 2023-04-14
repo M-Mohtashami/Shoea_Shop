@@ -5,6 +5,7 @@ import { Button, deleteModal } from '@/components';
 import { getData, update } from '@/api';
 import Cookies from 'js-cookie';
 import { data } from 'autoprefixer';
+import { Routes } from '@/Routes';
 
 const checkoutPrice = (cart) => {
   const checkout = document.getElementById('checkout-price');
@@ -371,9 +372,8 @@ export const Cart = () => {
               {
                 event: 'click',
                 callback: (e) => {
-                  //   Cart.push(productInfo);
                   console.log(Cart);
-                  //   Routes().navigate('/shop');
+                  Routes().navigate('/checkout');
                 },
               },
             ],

@@ -1,4 +1,4 @@
-import { onBoarding, Login, Shop, Cart } from '@/Screens';
+import { onBoarding, Login, Shop, Cart, Checkout } from '@/Screens';
 import { getData } from '@/api';
 import { SingleProduct } from '@/layout';
 import { El } from '@/library';
@@ -41,6 +41,9 @@ export const Routes = () => {
   });
   router.on('/cart', function () {
     applyRouting(Cart());
+  });
+  router.on('/checkout', function () {
+    applyRouting(Checkout());
   });
   router.resolve();
   return router;
