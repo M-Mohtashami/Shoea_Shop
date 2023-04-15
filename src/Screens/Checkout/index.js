@@ -4,7 +4,10 @@ import { Button } from '@/components';
 import { cart, colorStyle } from '@/layout';
 import { El } from '@/library';
 import { svgs } from '@/svgs';
+import { finallAddress } from './Address';
+import { finallShipping } from './Shipping';
 
+let amount = 0;
 // header of checkout page
 const header = () => {
   return El({
@@ -62,7 +65,7 @@ const footer = () => {
   return El({
     element: 'div',
     className:
-      'w-full p-6 h-28 flex items-start justify-between bg-white shadow-2xl border-2 rounded-t-3xl',
+      'fixed bottom-0 w-full p-6 h-28 flex items-start justify-between bg-white shadow-2xl border-2 rounded-t-3xl',
     children: [
       Button({
         child: 'Check out',
@@ -88,11 +91,14 @@ const footer = () => {
 // render function for order list
 const renderOrderList = () => {
   const orderList = document.getElementById('order-list');
+  const amountPrice = document.getElementById('amount-price');
   orderList.innerHTML = '';
   cart.map((item) => {
     getData(`/products/${item.id}`).then((response) => {
       const product = response.data;
       item.totalPrice = item.quantity * product.price;
+      amount += item.totalPrice;
+      amountPrice.innerHTML = '$ ' + amount;
       orderList.appendChild(
         El({
           element: 'div',
@@ -188,10 +194,12 @@ const renderOrderList = () => {
 };
 
 export const Checkout = () => {
+  console.log(finallShipping.hasOwnProperty('name'));
   setTimeout(renderOrderList, 0);
   return El({
     element: 'div',
-    className: 'h-full flex flex-col items-center justify-start',
+    className:
+      'relative overflow-y-scroll pb-16 h-full flex flex-col items-center justify-start',
     children: [
       header(),
       // Shipping address
@@ -231,11 +239,14 @@ export const Checkout = () => {
                         element: 'span',
                         className:
                           'w-32 text-shoea text-xl font-bold whitespace-nowrap truncate',
-                        innerText: 'Address',
+                        innerText: finallAddress.name,
                       }),
                       El({
                         element: 'span',
                         innerHTML: svgs.Edit,
+                        onclick: (e) => {
+                          Routes().navigate('/shipping-address');
+                        },
                       }),
                     ],
                   }),
@@ -247,7 +258,7 @@ export const Checkout = () => {
                       El({
                         element: 'p',
                         className: ``,
-                        innerText: 'full address',
+                        innerText: finallAddress.address,
                       }),
                     ],
                   }),
@@ -287,41 +298,112 @@ export const Checkout = () => {
             className: 'text-2xl font-semibold',
             innerText: 'Choose Shipping',
           }),
-          //Shipping Address section
+          //Shipping method section
           El({
             element: 'div',
-            className:
-              'max-h-sm w-full flex items-center gap-4 p-4 shadow-lg rounded-2xl',
+            className: 'w-full',
             children: [
-              El({
-                element: 'span',
-                className:
-                  '[&_path]:fill-black flex items-center justify-center',
-                innerHTML: svgs.Shipping,
-              }),
-              El({
-                element: 'div',
-                className:
-                  'w-full flex flex-col gap-2 items-start justify-between ',
-                children: [
-                  // title of selected product
-                  El({
+              finallShipping.hasOwnProperty('name')
+                ? El({
                     element: 'div',
-                    className: 'w-full flex items-center justify-between',
+                    className:
+                      'max-h-sm w-full flex items-center gap-4 p-4 shadow-lg rounded-2xl',
+                    children: [
+                      //location icon
+                      El({
+                        element: 'span',
+                        className:
+                          'p-2 rounded-full bg-black [&_path]:fill-white flex items-center justify-center',
+                        innerHTML: svgs.Shipping,
+                      }),
+                      El({
+                        element: 'div',
+                        className:
+                          'w-full flex flex-col gap-2 items-start justify-between ',
+                        children: [
+                          // title of selected product
+                          El({
+                            element: 'div',
+                            className:
+                              'w-full flex items-center justify-between',
+                            children: [
+                              El({
+                                element: 'span',
+                                className:
+                                  'w-32 text-shoea text-xl font-bold whitespace-nowrap truncate',
+                                innerText: finallShipping.name,
+                              }),
+                              El({
+                                element: 'span',
+                                className: 'text-shoea text-lg font-bold',
+                                innerText: '$ ' + finallShipping.price,
+                              }),
+                              El({
+                                element: 'span',
+                                innerHTML: svgs.Edit,
+                                onclick: (e) => {
+                                  Routes().navigate('/shipping-method');
+                                },
+                              }),
+                            ],
+                          }),
+                          //details of selected Address
+                          El({
+                            element: 'div',
+                            className:
+                              'w-full flex items-center justify-start gap-2 ',
+                            children: [
+                              El({
+                                element: 'p',
+                                className: ``,
+                                innerText: finallShipping.method,
+                              }),
+                            ],
+                          }),
+                        ],
+                      }),
+                    ],
+                  })
+                : El({
+                    element: 'div',
+                    onclick: () => {
+                      Routes().navigate('/shipping-method');
+                    },
+                    className:
+                      'max-h-sm w-full flex items-center gap-4 p-4 shadow-lg rounded-2xl',
                     children: [
                       El({
                         element: 'span',
-                        className: 'text-shoea text-xl font-bold',
-                        innerText: 'Choose Shipping Type',
+                        className:
+                          '[&_path]:fill-black flex items-center justify-center',
+                        innerHTML: svgs.Shipping,
                       }),
                       El({
-                        element: 'span',
-                        innerHTML: svgs.Next,
+                        element: 'div',
+                        className:
+                          'w-full flex flex-col gap-2 items-start justify-between ',
+                        children: [
+                          // title of selected product
+                          El({
+                            element: 'div',
+                            className:
+                              'w-full flex items-center justify-between',
+                            children: [
+                              El({
+                                element: 'span',
+                                className: 'text-shoea text-xl font-bold',
+                                innerText: 'Choose Shipping Type',
+                              }),
+                              El({
+                                element: 'span',
+                                innerHTML: svgs.Next,
+                              }),
+                            ],
+                          }),
+                        ],
                       }),
                     ],
                   }),
-                ],
-              }),
             ],
           }),
         ],
@@ -358,8 +440,79 @@ export const Checkout = () => {
           }),
         ],
       }),
-
       //price section
+      El({
+        element: 'div',
+        className:
+          'bg-white shadow-xl rounded-lg w-[90%] px-2 py-4 mb-20 border border-gray-300 flex flex-col items-start justify-start gap-6',
+        children: [
+          El({
+            element: 'div',
+            className: 'w-full flex items-center justify-between',
+            children: [
+              El({
+                element: 'span',
+                innerText: 'Amount',
+              }),
+              El({
+                element: 'span',
+                id: 'amount-price',
+                innerText: '$ 00.00',
+              }),
+            ],
+          }),
+          //shipping price section
+          El({
+            element: 'div',
+            className: 'w-full flex items-center justify-between',
+            children: [
+              El({
+                element: 'span',
+                innerText: 'Shipping',
+              }),
+              El({
+                element: 'span',
+                id: 'shipping-price',
+                innerText: '$ 00.00',
+              }),
+            ],
+          }),
+          // poromo price section
+          El({
+            element: 'div',
+            className: 'w-full flex items-center justify-between hidden',
+            children: [
+              El({
+                element: 'span',
+                innerText: 'Promo',
+              }),
+              El({
+                element: 'span',
+                id: 'promo-price',
+                innerText: '$ 00.00',
+              }),
+            ],
+          }),
+          //total price section
+          El({
+            element: 'div',
+            className:
+              'w-full flex items-center justify-between border-t border-gray-300 pt-8',
+            children: [
+              El({
+                element: 'span',
+                innerText: 'Total',
+              }),
+              El({
+                element: 'span',
+                id: 'total-price',
+                innerText: '$ 00.00',
+              }),
+            ],
+          }),
+        ],
+      }),
+      // footer
       footer(),
     ],
   });

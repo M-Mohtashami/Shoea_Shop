@@ -4,6 +4,8 @@ import { SingleProduct } from '@/layout';
 import { El } from '@/library';
 import Navigo from 'navigo';
 import Cookies from 'js-cookie';
+import { Address } from '@/Screens/Checkout/Address';
+import { Shipping } from '@/Screens/Checkout/Shipping';
 
 const info = {
   name: 'Mohammad',
@@ -44,6 +46,12 @@ export const Routes = () => {
   });
   router.on('/checkout', function () {
     applyRouting(Checkout());
+  });
+  router.on('/shipping-address', function () {
+    applyRouting(Address());
+  });
+  router.on('/shipping-method', function () {
+    applyRouting(Shipping());
   });
   router.resolve();
   return router;
