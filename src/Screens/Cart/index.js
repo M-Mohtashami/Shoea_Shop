@@ -17,299 +17,298 @@ const checkoutPrice = (cart) => {
 };
 
 export const cartRender = () => {
-  getData(`/users?_email=${Cookies.get('shoea')}`)
-    .then((response) => {
-      const container = document.getElementById('cart-section');
-      container.innerHTML = '';
-      // update cart data in local variable based on server data
-      updateCart(response.data[0].cart);
-      //update total price
-      checkoutPrice(cart);
-      // create a card of product in cart
-      cart.forEach((item) => {
-        getData(`/products/${item.id}`).then((response) => {
-          const product = response.data;
-          const elem = El({
-            element: 'div',
-            className:
-              'max-h-sm w-full flex items-center gap-2 p-4 shadow-lg rounded-2xl',
-            children: [
-              El({
-                element: 'img',
-                className: 'rounded-lg w-32 aspect-square	',
-                src: item.img,
-              }),
-              El({
-                element: 'div',
-                className:
-                  'w-full flex flex-col gap-2 items-start justify-between ',
-                children: [
-                  // title of selected product
-                  El({
-                    element: 'div',
-                    className: 'w-full flex items-center justify-between',
-                    children: [
-                      El({
-                        element: 'span',
-                        className:
-                          'w-32 text-shoea text-xl font-bold whitespace-nowrap truncate',
-                        innerText: item.name,
-                      }),
-                      El({
-                        element: 'span',
-                        className: 'flex justify-end',
-                        innerHTML: svgs.Trash,
-                        onclick: (e) => {
-                          deleteModal(item);
-                        },
-                      }),
-                    ],
-                  }),
-                  //details of selected product
-                  El({
-                    element: 'div',
-                    className: 'w-full flex items-center justify-start gap-2 ',
-                    children: [
-                      El({
-                        element: 'div',
-                        className: `w-5 h-5 ${
-                          colorStyle[item.color].bg
-                        } flex items-center justify-center rounded-full cursor-pointer`,
-                      }),
-                      El({
-                        element: 'span',
-                        className: `text-shoea text-md font-semibold`,
-                        innerText: item.color,
-                      }),
-                      El({
-                        element: 'div',
-                        className: `w-1 h-5 border-r-2 border-gray-500`,
-                      }),
-                      El({
-                        element: 'span',
-                        className: `text-shoea text-md font-semibold`,
-                        innerText: 'size',
-                      }),
-                      El({
-                        element: 'span',
-                        className: `text-shoea text-md font-semibold`,
-                        innerText: item.size,
-                      }),
-                    ],
-                  }),
-                  //product total price and quantity handel button
-                  El({
-                    element: 'div',
-                    className: 'w-full flex items-center justify-start gap-6',
-                    children: [
-                      El({
-                        element: 'span',
-                        id: `item-price-${item.id}`,
-                        className: 'text-shoea text-lg font-bold',
-                        innerText: `$ ${item.totalPrice}`,
-                      }),
-                      El({
-                        element: 'div',
-                        className:
-                          'w-24 h-10 bg-gray-200 rounded-full flex items-center justify-between p-4',
-                        children: [
-                          El({
-                            element: 'span',
-                            className: '[&_svg]:w-5',
-                            innerHTML: svgs.Mines,
-                            onclick: (e) => {
-                              item.quantity > 1
-                                ? item.quantity--
-                                : deleteModal(item);
-                              item.totalPrice = product.price * item.quantity;
-                              document.getElementById(
-                                `item-quantity-${item.id}`
-                              ).innerText = item.quantity;
-                              document.getElementById(
-                                `item-price-${item.id}`
-                              ).innerText = `$ ${item.totalPrice}`;
-                              updateCartData(cart);
-                            },
-                          }),
-                          El({
-                            element: 'span',
-                            id: `item-quantity-${item.id}`,
-                            className: 'font-bold',
-                            innerHTML: item.quantity,
-                          }),
-                          El({
-                            element: 'span',
-                            className: '[&_svg]:w-5',
-                            innerHTML: svgs.Plus,
-                            onclick: (e) => {
-                              item.quantity < +product['items_left']
-                                ? item.quantity++
-                                : item.quantity;
-                              item.totalPrice = product.price * item.quantity;
-                              document.getElementById(
-                                `item-quantity-${item.id}`
-                              ).innerText = item.quantity;
+  getData(`/users?_email=${Cookies.get('shoea')}`).then((response) => {
+    const container = document.getElementById('cart-section');
+    container.innerHTML = '';
+    // update cart data in local variable based on server data
+    updateCart(response.data[0].cart);
+    //update total price
+    checkoutPrice(cart);
+    // create a card of product in cart
+    cart.forEach((item) => {
+      getData(`/products/${item.id}`).then((response) => {
+        const product = response.data;
+        const elem = El({
+          element: 'div',
+          className:
+            'max-h-sm w-full flex items-center gap-2 p-4 shadow-lg rounded-2xl',
+          children: [
+            El({
+              element: 'img',
+              className: 'rounded-lg w-32 aspect-square	',
+              src: item.img,
+            }),
+            El({
+              element: 'div',
+              className:
+                'w-full flex flex-col gap-2 items-start justify-between ',
+              children: [
+                // title of selected product
+                El({
+                  element: 'div',
+                  className: 'w-full flex items-center justify-between',
+                  children: [
+                    El({
+                      element: 'span',
+                      className:
+                        'w-32 text-shoea text-xl font-bold whitespace-nowrap truncate',
+                      innerText: item.name,
+                    }),
+                    El({
+                      element: 'span',
+                      className: 'flex justify-end',
+                      innerHTML: svgs.Trash,
+                      onclick: (e) => {
+                        deleteModal(item);
+                      },
+                    }),
+                  ],
+                }),
+                //details of selected product
+                El({
+                  element: 'div',
+                  className: 'w-full flex items-center justify-start gap-2 ',
+                  children: [
+                    El({
+                      element: 'div',
+                      className: `w-5 h-5 ${
+                        colorStyle[item.color].bg
+                      } flex items-center justify-center rounded-full cursor-pointer`,
+                    }),
+                    El({
+                      element: 'span',
+                      className: `text-shoea text-md font-semibold`,
+                      innerText: item.color,
+                    }),
+                    El({
+                      element: 'div',
+                      className: `w-1 h-5 border-r-2 border-gray-500`,
+                    }),
+                    El({
+                      element: 'span',
+                      className: `text-shoea text-md font-semibold`,
+                      innerText: 'size',
+                    }),
+                    El({
+                      element: 'span',
+                      className: `text-shoea text-md font-semibold`,
+                      innerText: item.size,
+                    }),
+                  ],
+                }),
+                //product total price and quantity handel button
+                El({
+                  element: 'div',
+                  className: 'w-full flex items-center justify-start gap-6',
+                  children: [
+                    El({
+                      element: 'span',
+                      id: `item-price-${item.id}`,
+                      className: 'text-shoea text-lg font-bold',
+                      innerText: `$ ${item.totalPrice}`,
+                    }),
+                    El({
+                      element: 'div',
+                      className:
+                        'w-24 h-10 bg-gray-200 rounded-full flex items-center justify-between p-4',
+                      children: [
+                        El({
+                          element: 'span',
+                          className: '[&_svg]:w-5',
+                          innerHTML: svgs.Mines,
+                          onclick: (e) => {
+                            item.quantity > 1
+                              ? item.quantity--
+                              : deleteModal(item);
+                            item.totalPrice = product.price * item.quantity;
+                            document.getElementById(
+                              `item-quantity-${item.id}`
+                            ).innerText = item.quantity;
+                            document.getElementById(
+                              `item-price-${item.id}`
+                            ).innerText = `$ ${item.totalPrice}`;
+                            updateCartData(cart);
+                          },
+                        }),
+                        El({
+                          element: 'span',
+                          id: `item-quantity-${item.id}`,
+                          className: 'font-bold',
+                          innerHTML: item.quantity,
+                        }),
+                        El({
+                          element: 'span',
+                          className: '[&_svg]:w-5',
+                          innerHTML: svgs.Plus,
+                          onclick: (e) => {
+                            item.quantity < +product['items_left']
+                              ? item.quantity++
+                              : item.quantity;
+                            item.totalPrice = product.price * item.quantity;
+                            document.getElementById(
+                              `item-quantity-${item.id}`
+                            ).innerText = item.quantity;
 
-                              document.getElementById(
-                                `item-price-${item.id}`
-                              ).innerText = `$ ${item.totalPrice}`;
-                              updateCartData(cart);
-                            },
-                          }),
-                        ],
-                      }),
-                    ],
-                  }),
-                ],
-              }),
-            ],
-          });
-          container.appendChild(elem);
+                            document.getElementById(
+                              `item-price-${item.id}`
+                            ).innerText = `$ ${item.totalPrice}`;
+                            updateCartData(cart);
+                          },
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
         });
-      });
-    })
-    .catch((error) => {
-      // use cart data based on local data whene connection lost
-      const container = document.getElementById('cart-section');
-      cart.forEach((item) => {
-        getData(`/products/${item.id}`).then((response) => {
-          const product = response.data;
-          const elem = El({
-            element: 'div',
-            className:
-              'max-h-sm w-full flex items-center gap-2 p-4 shadow-lg rounded-2xl',
-            children: [
-              El({
-                element: 'img',
-                className: 'rounded-lg w-32 aspect-square	',
-                src: item.img,
-              }),
-              El({
-                element: 'div',
-                className:
-                  'w-full flex flex-col gap-2 items-start justify-between ',
-                children: [
-                  // title of selected product
-                  El({
-                    element: 'div',
-                    className: 'w-full flex items-center justify-between',
-                    children: [
-                      El({
-                        element: 'span',
-                        className:
-                          'w-32 text-shoea text-xl font-bold whitespace-nowrap truncate',
-                        innerText: item.name,
-                      }),
-                      El({
-                        element: 'span',
-                        className: 'flex justify-end',
-                        innerHTML: svgs.Trash,
-                      }),
-                    ],
-                  }),
-                  //details of selected product
-                  El({
-                    element: 'div',
-                    className: 'w-full flex items-center justify-start gap-2 ',
-                    children: [
-                      El({
-                        element: 'div',
-                        className: `w-5 h-5 ${
-                          colorStyle[item.color].bg
-                        } flex items-center justify-center rounded-full cursor-pointer`,
-                      }),
-                      El({
-                        element: 'span',
-                        className: `text-shoea text-md font-semibold`,
-                        innerText: item.color,
-                      }),
-                      El({
-                        element: 'div',
-                        className: `w-1 h-5 border-r-2 border-gray-500`,
-                      }),
-                      El({
-                        element: 'span',
-                        className: `text-shoea text-md font-semibold`,
-                        innerText: 'size',
-                      }),
-                      El({
-                        element: 'span',
-                        className: `text-shoea text-md font-semibold`,
-                        innerText: item.size,
-                      }),
-                    ],
-                  }),
-                  //product total price and quantity handel button
-                  El({
-                    element: 'div',
-                    className: 'w-full flex items-center justify-start gap-6',
-                    children: [
-                      El({
-                        element: 'span',
-                        id: `item-price-${item.id}`,
-                        className: 'text-shoea text-lg font-bold',
-                        innerText: `$ ${item.totalPrice}`,
-                      }),
-                      El({
-                        element: 'div',
-                        className:
-                          'w-24 h-10 bg-gray-200 rounded-full flex items-center justify-between p-4',
-                        children: [
-                          El({
-                            element: 'span',
-                            className: '[&_svg]:w-5',
-                            innerHTML: svgs.Mines,
-                            onclick: (e) => {
-                              item.quantity > 1
-                                ? item.quantity--
-                                : item.quantity;
-                              item.totalPrice = product.price * item.quantity;
-                              document.getElementById(
-                                `item-quantity-${item.id}`
-                              ).innerText = item.quantity;
-                              document.getElementById(
-                                `item-price-${item.id}`
-                              ).innerText = `$ ${item.totalPrice}`;
-                              updateCartData(cart);
-                            },
-                          }),
-                          El({
-                            element: 'span',
-                            id: `item-quantity-${item.id}`,
-                            className: 'font-bold',
-                            innerHTML: item.quantity,
-                          }),
-                          El({
-                            element: 'span',
-                            className: '[&_svg]:w-5',
-                            innerHTML: svgs.Plus,
-                            onclick: (e) => {
-                              item.quantity < +product['items_left']
-                                ? item.quantity++
-                                : item.quantity;
-                              item.totalPrice = product.price * item.quantity;
-                              document.getElementById(
-                                `item-quantity-${item.id}`
-                              ).innerText = item.quantity;
-
-                              document.getElementById(
-                                `item-price-${item.id}`
-                              ).innerText = `$ ${item.totalPrice}`;
-                              updateCartData(cart);
-                            },
-                          }),
-                        ],
-                      }),
-                    ],
-                  }),
-                ],
-              }),
-            ],
-          });
-          container.appendChild(elem);
-        });
+        container.appendChild(elem);
       });
     });
+  });
+  // .catch((error) => {
+  //   // use cart data based on local data whene connection lost
+  //   const container = document.getElementById('cart-section');
+  //   cart.forEach((item) => {
+  //     getData(`/products/${item.id}`).then((response) => {
+  //       const product = response.data;
+  //       const elem = El({
+  //         element: 'div',
+  //         className:
+  //           'max-h-sm w-full flex items-center gap-2 p-4 shadow-lg rounded-2xl',
+  //         children: [
+  //           El({
+  //             element: 'img',
+  //             className: 'rounded-lg w-32 aspect-square	',
+  //             src: item.img,
+  //           }),
+  //           El({
+  //             element: 'div',
+  //             className:
+  //               'w-full flex flex-col gap-2 items-start justify-between ',
+  //             children: [
+  //               // title of selected product
+  //               El({
+  //                 element: 'div',
+  //                 className: 'w-full flex items-center justify-between',
+  //                 children: [
+  //                   El({
+  //                     element: 'span',
+  //                     className:
+  //                       'w-32 text-shoea text-xl font-bold whitespace-nowrap truncate',
+  //                     innerText: item.name,
+  //                   }),
+  //                   El({
+  //                     element: 'span',
+  //                     className: 'flex justify-end',
+  //                     innerHTML: svgs.Trash,
+  //                   }),
+  //                 ],
+  //               }),
+  //               //details of selected product
+  //               El({
+  //                 element: 'div',
+  //                 className: 'w-full flex items-center justify-start gap-2 ',
+  //                 children: [
+  //                   El({
+  //                     element: 'div',
+  //                     className: `w-5 h-5 ${
+  //                       colorStyle[item.color].bg
+  //                     } flex items-center justify-center rounded-full cursor-pointer`,
+  //                   }),
+  //                   El({
+  //                     element: 'span',
+  //                     className: `text-shoea text-md font-semibold`,
+  //                     innerText: item.color,
+  //                   }),
+  //                   El({
+  //                     element: 'div',
+  //                     className: `w-1 h-5 border-r-2 border-gray-500`,
+  //                   }),
+  //                   El({
+  //                     element: 'span',
+  //                     className: `text-shoea text-md font-semibold`,
+  //                     innerText: 'size',
+  //                   }),
+  //                   El({
+  //                     element: 'span',
+  //                     className: `text-shoea text-md font-semibold`,
+  //                     innerText: item.size,
+  //                   }),
+  //                 ],
+  //               }),
+  //               //product total price and quantity handel button
+  //               El({
+  //                 element: 'div',
+  //                 className: 'w-full flex items-center justify-start gap-6',
+  //                 children: [
+  //                   El({
+  //                     element: 'span',
+  //                     id: `item-price-${item.id}`,
+  //                     className: 'text-shoea text-lg font-bold',
+  //                     innerText: `$ ${item.totalPrice}`,
+  //                   }),
+  //                   El({
+  //                     element: 'div',
+  //                     className:
+  //                       'w-24 h-10 bg-gray-200 rounded-full flex items-center justify-between p-4',
+  //                     children: [
+  //                       El({
+  //                         element: 'span',
+  //                         className: '[&_svg]:w-5',
+  //                         innerHTML: svgs.Mines,
+  //                         onclick: (e) => {
+  //                           item.quantity > 1
+  //                             ? item.quantity--
+  //                             : item.quantity;
+  //                           item.totalPrice = product.price * item.quantity;
+  //                           document.getElementById(
+  //                             `item-quantity-${item.id}`
+  //                           ).innerText = item.quantity;
+  //                           document.getElementById(
+  //                             `item-price-${item.id}`
+  //                           ).innerText = `$ ${item.totalPrice}`;
+  //                           updateCartData(cart);
+  //                         },
+  //                       }),
+  //                       El({
+  //                         element: 'span',
+  //                         id: `item-quantity-${item.id}`,
+  //                         className: 'font-bold',
+  //                         innerHTML: item.quantity,
+  //                       }),
+  //                       El({
+  //                         element: 'span',
+  //                         className: '[&_svg]:w-5',
+  //                         innerHTML: svgs.Plus,
+  //                         onclick: (e) => {
+  //                           item.quantity < +product['items_left']
+  //                             ? item.quantity++
+  //                             : item.quantity;
+  //                           item.totalPrice = product.price * item.quantity;
+  //                           document.getElementById(
+  //                             `item-quantity-${item.id}`
+  //                           ).innerText = item.quantity;
+
+  //                           document.getElementById(
+  //                             `item-price-${item.id}`
+  //                           ).innerText = `$ ${item.totalPrice}`;
+  //                           updateCartData(cart);
+  //                         },
+  //                       }),
+  //                     ],
+  //                   }),
+  //                 ],
+  //               }),
+  //             ],
+  //           }),
+  //         ],
+  //       });
+  //       container.appendChild(elem);
+  //     });
+  //   });
+  // });
 };
 
 export const updateCartData = (cart) => {

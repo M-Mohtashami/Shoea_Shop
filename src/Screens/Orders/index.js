@@ -103,7 +103,7 @@ export const orderRender = (status = 'active') => {
                       El({
                         element: 'div',
                         className:
-                          'bg-black px-4 text-white rounded-full flex items-center justify-between p-4',
+                          'bg-black px-4 py-2 text-white rounded-full flex items-center justify-center whitespace-nowrap',
                         children: [
                           El({
                             element: 'span',
@@ -127,7 +127,18 @@ export const orderRender = (status = 'active') => {
 };
 
 export const Orders = () => {
-  setTimeout(orderRender, 0);
+  setTimeout(() => {
+    const active = document.getElementById('active');
+    // const compelited = document.getElementById('compelited');
+    active.classList.add(
+      'border-b',
+      'border-shoea',
+      'text-shoea',
+      'font-bold',
+      'shadow-md'
+    );
+    orderRender();
+  }, 0);
   return El({
     element: 'div',
     className: 'h-full flex flex-col items-center justify-start',
@@ -135,9 +146,78 @@ export const Orders = () => {
       // orderHeader(),
       El({
         element: 'div',
+        className:
+          'w-full px-4 pt-2 pb-4 mt-4 text-xl flex items-center justify-center gap-4',
+        children: [
+          El({
+            element: 'div',
+            id: 'active',
+            onclick: (e) => {
+              const active = document.getElementById('active');
+              const compelited = document.getElementById('compelited');
+              compelited.classList.remove(
+                'border-b',
+                'border-shoea',
+                'text-shoea',
+                'font-bold',
+                'shadow-md'
+              );
+              active.classList.add(
+                'border-b',
+                'border-shoea',
+                'text-shoea',
+                'font-bold',
+                'shadow-md'
+              );
+              orderRender('active');
+            },
+            className:
+              'w-1/2 p-2 text-gray-500 flex items-center justify-center',
+            children: [
+              El({
+                element: 'span',
+                innerText: 'Active',
+              }),
+            ],
+          }),
+          El({
+            element: 'div',
+            id: 'compelited',
+            onclick: (e) => {
+              const active = document.getElementById('active');
+              const compelited = document.getElementById('compelited');
+              compelited.classList.add(
+                'border-b',
+                'border-shoea',
+                'text-shoea',
+                'font-bold',
+                'shadow-md'
+              );
+              active.classList.remove(
+                'border-b',
+                'border-shoea',
+                'text-shoea',
+                'font-bold',
+                'shadow-md'
+              );
+              orderRender('compelited');
+            },
+            className:
+              'w-1/2 p-2 text-gray-500 flex items-center justify-center',
+            children: [
+              El({
+                element: 'span',
+                innerText: 'Compelete',
+              }),
+            ],
+          }),
+        ],
+      }),
+      El({
+        element: 'div',
         id: 'order-section',
         className:
-          'w-full px-3 py-4 flex flex-col items-center justify-start gap-6 overflow-y-scroll',
+          'w-full px-3 py-4 pb-24 flex flex-col items-center justify-start gap-6 overflow-y-scroll',
       }),
       navbar('orders'),
     ],

@@ -5,6 +5,7 @@ import { svgs } from '@/svgs';
 import { cart } from '@/layout';
 import Cookies from 'js-cookie';
 import { getData, update } from '@/api';
+import { paymentModal } from '@/components/PaymentModal';
 // let selectedAddress = finallAddress;
 let order = {};
 const payments = [
@@ -174,6 +175,7 @@ export const Payment = () => {
                         cart,
                       };
                       response.data[0].orders.push(order);
+                      response.data[0].cart = [];
                       console.log(response.data[0]);
                       update.put(
                         `/users/${response.data[0].id}`,
@@ -181,6 +183,8 @@ export const Payment = () => {
                       );
                     }
                   );
+                  paymentModal();
+                  // Routes().navigate('/shop');
                 },
               },
             ],

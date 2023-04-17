@@ -38,7 +38,7 @@ export const StartSlider = () => {
     element: 'div',
     id: 'first-slider',
     className:
-      'w-full h-full pb-4 flex flex-col items-center justify-end transition ease-linear duration-500 transform',
+      'w-full h-full pb-4 flex flex-col items-center justify-between transition ease-linear duration-500 transform',
     children: [
       El({
         element: 'div',
