@@ -6,99 +6,34 @@ import { El } from '@/library';
 import { svgs } from '@/svgs';
 import { finallAddress } from './Address';
 import { finallShipping } from './Shipping';
+import Cookies from 'js-cookie';
 
 let amount = 0;
-// header of checkout page
-const header = () => {
-  return El({
-    element: 'div',
-    className: 'w-full p-4 flex items-center justify-between',
-    children: [
-      El({
-        element: 'div',
-        className: 'flex items-center justify-center gap-4',
-        children: [
-          El({
-            element: 'div',
-            className: '',
-            onclick: (e) => {
-              Routes().navigate('/cart');
-            },
-            children: [
-              El({
-                element: 'span',
-                className: 'w-10 h-10',
-                innerHTML: svgs.Back,
-              }),
-            ],
-          }),
-          El({
-            element: 'div',
-            className: 'flex flex-col items-start justify-between',
-            children: [
-              El({
-                element: 'span',
-                className: 'text-[#152536] text-xl font-bold ',
-                innerText: 'Checkout',
-              }),
-            ],
-          }),
-        ],
-      }),
-      // More icon
-      El({
-        element: 'div',
-        className: '',
-        children: [
-          El({
-            element: 'span',
-            className: '[&_path]:fill-shoea',
-            innerHTML: svgs.More,
-          }),
-        ],
-      }),
-    ],
-  });
-};
-//footer of checkout page
-const footer = () => {
-  return El({
-    element: 'div',
-    className:
-      'fixed bottom-0 w-full p-6 h-28 flex items-start justify-between bg-white shadow-2xl border-2 rounded-t-3xl',
-    children: [
-      Button({
-        child: 'Check out',
-        icon: svgs.Next,
-        variant: 'cart',
-        classes:
-          'font-bold w-full flex flex-row-reverse items-center justify-center gap-2',
-        eventListener: [
-          {
-            event: 'click',
-            callback: (e) => {
-              //   Cart.push(productInfo);
-              console.log(Cart);
-              //   Routes().navigate('/shop');
-            },
-          },
-        ],
-      }),
-    ],
-  });
-};
-
+let poromo = 0;
+let shippingPrice = 0;
+let finallPrice = 0;
 // render function for order list
 const renderOrderList = () => {
   const orderList = document.getElementById('order-list');
   const amountPrice = document.getElementById('amount-price');
+  const totalPrice = document.getElementById('total-price');
+  const shipPrice = document.getElementById('shipping-price');
   orderList.innerHTML = '';
   cart.map((item) => {
     getData(`/products/${item.id}`).then((response) => {
       const product = response.data;
+      //update total price of each item
       item.totalPrice = item.quantity * product.price;
+      // calculate total price of all products and apply to UI
       amount += item.totalPrice;
-      amountPrice.innerHTML = '$ ' + amount;
+      amountPrice.innerText = '$ ' + amount;
+      console.log(amount, finallShipping.price, amount * poromo);
+      // calculate shipping price
+      shippingPrice = finallShipping.price ? finallShipping.price : 0;
+      shipPrice.innerText = '$ ' + shippingPrice;
+      // calculate finall price: products & shipping price & promo price
+      finallPrice = amount + shippingPrice - amount * poromo;
+      totalPrice.innerText = '$ ' + finallPrice;
       orderList.appendChild(
         El({
           element: 'div',
@@ -192,10 +127,96 @@ const renderOrderList = () => {
     });
   });
 };
+// header of checkout page
+const header = () => {
+  return El({
+    element: 'div',
+    className: 'w-full p-4 flex items-center justify-between',
+    children: [
+      El({
+        element: 'div',
+        className: 'flex items-center justify-center gap-4',
+        children: [
+          El({
+            element: 'div',
+            className: '',
+            onclick: (e) => {
+              Routes().navigate('/cart');
+            },
+            children: [
+              El({
+                element: 'span',
+                className: 'w-10 h-10',
+                innerHTML: svgs.Back,
+              }),
+            ],
+          }),
+          El({
+            element: 'div',
+            className: 'flex flex-col items-start justify-between',
+            children: [
+              El({
+                element: 'span',
+                className: 'text-[#152536] text-xl font-bold ',
+                innerText: 'Checkout',
+              }),
+            ],
+          }),
+        ],
+      }),
+      // More icon
+      El({
+        element: 'div',
+        className: '',
+        children: [
+          El({
+            element: 'span',
+            className: '[&_path]:fill-shoea',
+            innerHTML: svgs.More,
+          }),
+        ],
+      }),
+    ],
+  });
+};
+//footer of checkout page
+const footer = () => {
+  return El({
+    element: 'div',
+    className:
+      'fixed bottom-0 w-full p-6 h-28 flex items-start justify-between bg-white shadow-2xl border-2 rounded-t-3xl',
+    children: [
+      Button({
+        child: 'Continue to Payment',
+        icon: svgs.Next,
+        variant: 'cart',
+        id: 'to-payment',
+        classes:
+          'font-bold w-full flex flex-row-reverse items-center justify-center gap-2',
+        eventListener: [
+          {
+            event: 'click',
+            callback: (e) => {
+              if (finallPrice > 0 && shippingPrice > 0) {
+                Routes().navigate('/payment-method');
+              }
+            },
+          },
+        ],
+      }),
+    ],
+  });
+};
 
 export const Checkout = () => {
   console.log(finallShipping.hasOwnProperty('name'));
-  setTimeout(renderOrderList, 0);
+  setTimeout(() => {
+    amount = 0;
+    poromo = 0;
+    shippingPrice = 0;
+    finallPrice = 0;
+    renderOrderList();
+  }, 0);
   return El({
     element: 'div',
     className:

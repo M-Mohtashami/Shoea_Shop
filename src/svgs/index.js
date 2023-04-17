@@ -90,7 +90,7 @@ export const svgs = {
   Wallet: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
 <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z"/>
 </svg>`,
-  WalletFill: `<svg width="800px" height="800px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" >
+  WalletFill: `<svg width="32" height="32" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" >
   <path d="M0 0h48v48H0z" fill="none"/>
   <g id="Shopicon">
     <path d="M40,14h-8V4L4,14v26c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V18C44,15.8,42.2,14,40,14z M36,29c0,1.105-0.895,2-2,2

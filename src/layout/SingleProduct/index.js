@@ -1,5 +1,5 @@
 import { Routes } from '@/Routes';
-import { getData, update, fullUpdate } from '@/api';
+import { getData, update } from '@/api';
 import { Button } from '@/components';
 import { El } from '@/library';
 import { svgs } from '@/svgs';

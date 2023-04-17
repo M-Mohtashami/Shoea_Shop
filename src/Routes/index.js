@@ -6,6 +6,8 @@ import Navigo from 'navigo';
 import Cookies from 'js-cookie';
 import { Address } from '@/Screens/Checkout/Address';
 import { Shipping } from '@/Screens/Checkout/Shipping';
+import { Payment } from '@/Screens/Checkout/Payment';
+import { Orders } from '@/Screens/Orders';
 
 const info = {
   name: 'Mohammad',
@@ -52,6 +54,12 @@ export const Routes = () => {
   });
   router.on('/shipping-method', function () {
     applyRouting(Shipping());
+  });
+  router.on('/payment-method', function () {
+    applyRouting(Payment());
+  });
+  router.on('/orders', function () {
+    applyRouting(Orders());
   });
   router.resolve();
   return router;
