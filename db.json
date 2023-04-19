@@ -153,7 +153,56 @@
           ]
         }
       ],
-      "wishlist": [],
+      "wishlist": [
+        {
+          "id": 26,
+          "name": "Nizza X Disney",
+          "brand": "ADIDAS",
+          "gender": "KIDS",
+          "category": "CASUAL",
+          "price": 55,
+          "sizes": [
+            41,
+            43,
+            45
+          ],
+          "colors": [
+            "black",
+            "brown",
+            "white",
+            "blue",
+            "red"
+          ],
+          "is_in_inventory": true,
+          "items_left": 6,
+          "imageURL": "https://assets.adidas.com/images/h_320,f_auto,q_auto:sensitive,fl_lossy/ef901c7aeac042578eceab9d0159196c_9366/Nizza_x_Disney_Sport_Goofy_Shoes_White_FW0651_01_standard.jpg",
+          "slug": "nizza-x-disney"
+        },
+        {
+          "id": 1,
+          "name": "Nike React Infinity Run Flyknit",
+          "brand": "NIKE",
+          "gender": "MEN",
+          "category": "RUNNING",
+          "price": 160,
+          "sizes": [
+            41,
+            43,
+            45
+          ],
+          "colors": [
+            "black",
+            "brown",
+            "white",
+            "blue",
+            "red"
+          ],
+          "is_in_inventory": true,
+          "items_left": 3,
+          "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-665455a5-45de-40fb-945f-c1852b82400d/react-infinity-run-flyknit-mens-running-shoe-zX42Nc.jpg",
+          "slug": "nike-react-infinity-run-flyknit"
+        }
+      ],
       "poromo": [
         {
           "type": "Silver",

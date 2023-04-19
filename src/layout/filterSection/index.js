@@ -1,3 +1,4 @@
+import { showProducts } from '@/Screens';
 import { El } from '@/library';
 import { svgs } from '@/svgs';
 
@@ -70,7 +71,7 @@ export const filterSection = () => {
     element: 'div',
     id: 'filter-section',
     className:
-      'w-full px-4 py-8 flex items-center justify-start gap-4 overflow-x-scroll',
+      'w-full px-4 py-2 flex items-center justify-start gap-4 overflow-x-scroll overflow-y-hidden',
     children: [...renderFilter()],
     eventListener: [
       {
@@ -81,6 +82,9 @@ export const filterSection = () => {
           e.currentTarget.innerHTML = '';
           console.log(target);
           e.currentTarget.append(...renderFilter(+target));
+          filters[target].name === 'All'
+            ? showProducts()
+            : showProducts(filters[target].name.toUpperCase());
         },
       },
     ],

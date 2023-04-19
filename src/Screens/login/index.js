@@ -51,6 +51,11 @@ const submitHandler = (e) => {
           Routes().navigate('/shop');
         } else {
           // Log in info are incorrect or user does not exist
+          document.getElementById('wrong-msg').classList.remove('hidden');
+          document.getElementById('login-form').reset();
+          setTimeout(() => {
+            document.getElementById('wrong-msg').classList.add('hidden');
+          }, 3000);
           console.log(response);
         }
       })
@@ -101,13 +106,13 @@ export const Login = () => {
                 callback: (e) => {
                   const parent = e.currentTarget.parentElement;
                   emailVlidationCheck(e.currentTarget.value)
-                    ? (parent.classList.remove(
-                        'opacity-50',
+                    ? (parent.classList.remove('border-2', 'border-black'),
+                      parent.classList.add(
                         'border-2',
-                        'border-black'
-                      ),
-                      parent.classList.add('border-2', 'border-black'))
-                    : (parent.classList.add('opacity-50'),
+                        'border-black',
+                        '[&_path]:fill-gray-900'
+                      ))
+                    : (parent.classList.add('[&_path]:fill-gray-500'),
                       parent.classList.remove('border-2', 'border-black'));
 
                   checkValidation();
@@ -121,19 +126,20 @@ export const Login = () => {
             placeholder: 'Password',
             type: 'password',
             name: 'password',
+            id: 'password',
             eventListener: [
               {
                 event: 'input',
                 callback: (e) => {
                   const parent = e.currentTarget.parentElement;
                   passVlidationCheck(e.currentTarget.value)
-                    ? (parent.classList.remove(
-                        'opacity-50',
+                    ? (parent.classList.remove('border-2', 'border-black'),
+                      parent.classList.add(
                         'border-2',
-                        'border-black'
-                      ),
-                      parent.classList.add('border-2', 'border-black'))
-                    : (parent.classList.add('opacity-50'),
+                        'border-black',
+                        '[&_path]:fill-gray-900'
+                      ))
+                    : (parent.classList.add('[&_path]:fill-gray-500'),
                       parent.classList.remove('border-2', 'border-black'));
 
                   checkValidation();
@@ -160,6 +166,13 @@ export const Login = () => {
                 innerText: 'Remember me',
               }),
             ],
+          }),
+          El({
+            element: 'span',
+            id: 'wrong-msg',
+            className:
+              'text-red-500 flex items-center justify-center w-full hidden',
+            innerText: 'incorrect email or password',
           }),
           Button({
             child: 'Sign in',

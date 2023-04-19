@@ -1,3 +1,4 @@
+import { Routes } from '@/Routes';
 import { El } from '@/library';
 import { svgs } from '@/svgs';
 
@@ -40,6 +41,7 @@ export const brandFilter = () => {
       ...brands.map((brand) => {
         return El({
           element: 'div',
+          onclick: (e) => Routes().navigate(`/brand/${brand.name}`),
           className:
             'flex flex-col col-span-1 items-center justify-center gap-1',
           children: [

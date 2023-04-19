@@ -8,6 +8,10 @@ import { Address } from '@/Screens/Checkout/Address';
 import { Shipping } from '@/Screens/Checkout/Shipping';
 import { Payment } from '@/Screens/Checkout/Payment';
 import { Orders } from '@/Screens/Orders';
+import { brandPage } from '@/Screens/Shop/brandPage';
+import { mostPopular } from '@/Screens/Shop/mostPopular';
+import { SearchSection } from '@/Screens/Search';
+import { wishlist } from '@/Screens/Shop/wishlist';
 
 const info = {
   name: 'Mohammad',
@@ -36,12 +40,27 @@ export const Routes = () => {
       console.log(info);
       applyRouting(Shop(info));
     });
-    // router.destroy();
+  });
+  router.on('/search', function () {
+    applyRouting(SearchSection());
   });
   router.on('/products/:id', function (res) {
     getData(`/products/${res.data.id}`).then((response) => {
       applyRouting(SingleProduct(response.data));
     });
+  });
+  router.on('/brand/:brand', function (res) {
+    getData(`/products?brand=${res.data.brand.toUpperCase()}`).then(
+      (response) => {
+        applyRouting(brandPage(res.data.brand, response.data));
+      }
+    );
+  });
+  router.on('/most-popular', function () {
+    applyRouting(mostPopular());
+  });
+  router.on('/wishlist', function () {
+    applyRouting(wishlist());
   });
   router.on('/cart', function () {
     applyRouting(Cart());

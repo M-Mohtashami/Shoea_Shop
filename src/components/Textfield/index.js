@@ -7,7 +7,7 @@ export const Textfield = ({ icon, info = '', ...inputProps }) => {
     className: `relative text-black text-left px-7 py-2 bg-gray-100 rounded-md`,
     children: [
       El({
-        className: `w-full px-1 py-0 bg-gray-100 placeholder-black border-none focus:ring-0`,
+        className: `w-full px-1 py-0 bg-gray-100 placeholder-black border-none focus:ring-0 focus:outline-none`,
         element: 'input',
         autocomplete: 'off',
         ...inputProps,
@@ -21,6 +21,11 @@ export const Textfield = ({ icon, info = '', ...inputProps }) => {
         element: 'span',
         className: 'absolute top-3 right-4 cursor-pointer',
         innerHTML: info,
+        onclick: (e) => {
+          document.getElementById('password').type === 'password'
+            ? (document.getElementById('password').type = 'text')
+            : (document.getElementById('password').type = 'password');
+        },
       }),
     ],
   });

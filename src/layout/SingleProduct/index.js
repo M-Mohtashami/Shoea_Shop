@@ -164,6 +164,7 @@ export const SingleProduct = (product) => {
                 children: [
                   El({
                     element: 'img',
+                    className: 'w-full h-full',
                     src: product.imageURL,
                   }),
                 ],
@@ -221,6 +222,15 @@ export const SingleProduct = (product) => {
                   El({
                     element: 'span',
                     className: 'flex justify-end',
+                    onclick: (e) => {
+                      getData(`/users?_email=${Cookies.get('shoea')}`).then(
+                        (response) => {
+                          const user = response.data[0];
+                          user.wishlist.push(product);
+                          update.put(`/users/${user.id}`, user);
+                        }
+                      );
+                    },
                     innerHTML: svgs.Like,
                   }),
                 ],

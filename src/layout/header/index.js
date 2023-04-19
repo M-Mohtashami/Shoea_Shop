@@ -1,3 +1,4 @@
+import { Routes } from '@/Routes';
 import { El } from '@/library';
 import { svgs } from '@/svgs';
 
@@ -50,6 +51,9 @@ export const header = (info) => {
           El({
             element: 'span',
             innerHTML: svgs.Like,
+            onclick: (e) => {
+              Routes().navigate('/wishlist');
+            },
           }),
         ],
       }),
