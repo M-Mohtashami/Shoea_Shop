@@ -23,9 +23,14 @@ export const searchResult = (searchVal) => {
             .classList.add('hidden');
         } else {
           renderProducts(section, response.data);
-          searchHistory.push(searchVal);
-          searchHistory = Array.from(new Set(searchHistory));
-          localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+          if (searchVal !== '') {
+            searchHistory.push(searchVal);
+            searchHistory = Array.from(new Set(searchHistory));
+            localStorage.setItem(
+              'searchHistory',
+              JSON.stringify(searchHistory)
+            );
+          }
         }
       })
       .catch((error) => console.log(error));
@@ -54,6 +59,30 @@ export const renderSearch = () => {
   results.innerHTML = '';
   searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
   if (searchHistory.length > 0) {
+    results.appendChild(
+      El({
+        element: 'div',
+        className:
+          'w-full p-4 flex items-center justify-between border-b border-gray-300',
+
+        children: [
+          El({
+            element: 'span',
+            className: 'font-bold text-lg text-black',
+            innerText: 'Recent',
+          }),
+          El({
+            element: 'span',
+            className: 'font-semibold text-lg text-black',
+            onclick: (e) => {
+              localStorage.removeItem('searchHistory');
+              renderSearch();
+            },
+            innerText: 'clear All',
+          }),
+        ],
+      })
+    );
     searchHistory.map((sh) => {
       const searchEl = El({
         element: 'div',
