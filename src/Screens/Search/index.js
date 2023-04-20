@@ -9,6 +9,9 @@ export const searchResult = (searchVal) => {
   console.log(searchVal);
   const section = document.querySelector('.search-section');
   section.innerHTML = '';
+  document.getElementById('search-detail')
+    ? document.getElementById('search-detail').remove()
+    : null;
   searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
   console.log(searchHistory);
   let page = 1;
@@ -52,6 +55,7 @@ export const searchResult = (searchVal) => {
             'beforebegin',
             El({
               element: 'div',
+              id: 'search-detail',
               className:
                 'w-full p-4 flex flex-col items-center justify-between',
 
